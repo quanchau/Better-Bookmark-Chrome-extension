@@ -1,8 +1,7 @@
 {
   "manifest_version" : 2,
-  "name": "Bookmark",
-  "version": "0.1",
-
+  "name": "Better Bookmark",
+  "version": "0.11",
 
   "browser_action":{
     "default_icon": "icons/pinkBlob.png",
@@ -10,10 +9,13 @@
     "default_title": "Save This Site!"
   },
 
-
+  "icons": {
+   "48": "icons/pinkBlob.png"
+ },
 
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "tabs"
   ]
 }

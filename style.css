@@ -1,14 +1,9 @@
-
-
 body {
 	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-	/**background-color: #F08080;
-	background-color: #dfd5d9;
-	*/
+	/**background-color: #F08080; */
 	background-image: url("icons/pinkBackground.png");
 	width: 200px;
-	height: 250px;
-	overflow: hidden;
+    overflow: hidden;
 
 }
 
@@ -25,6 +20,12 @@ body {
 	color: #ffffff;
 }
 
+.button:hover {
+	color: #fbc0e1; /* Fallback for older browsers */
+
+
+}
+
 #topic {
 	text-align: left;
 
@@ -32,10 +33,24 @@ body {
 }
 
 #save {
-	color: #e5135d;
+	color: #000000;
 
 }
 
 #save:hover {
+	color: #e5135d;
+}
+
+#success {
+	text-align: center;
+	font-size:12px;
+}
+
+a {
+	 color:inherit;
+	text-decoration: none;
+}
+
+#bookmarks {
 	color: #000000;
 }
