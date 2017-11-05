@@ -4,8 +4,7 @@ body {
 	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 	/**background-color: #F08080; */
 	background-color: #dfd5d9;
-	margin-left: 40%;
-	margin-right: 40%;
+
 }
 
 .header {
@@ -25,10 +24,10 @@ body {
 #topic {
 	text-align: left;
 
+
 }
 
 #save {
-	padding: 1%;
 	color: #e5135d;
 
 }
