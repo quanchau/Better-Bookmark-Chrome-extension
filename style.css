@@ -1,0 +1,41 @@
+
+
+body {
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+	/**background-color: #F08080;
+	background-color: #dfd5d9;
+	*/
+	background-image: url("icons/pinkBackground.png");
+	width: 200px;
+	height: 250px;
+	overflow: hidden;
+
+}
+
+.header {
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+	text-align: center;
+}
+
+.button {
+	text-align: center;
+	padding: 2%;
+
+	background-color: #000000;
+	color: #ffffff;
+}
+
+#topic {
+	text-align: left;
+
+
+}
+
+#save {
+	color: #e5135d;
+
+}
+
+#save:hover {
+	color: #000000;
+}
