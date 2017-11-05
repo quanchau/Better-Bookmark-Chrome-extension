@@ -6,8 +6,11 @@
 
   "browser_action":{
     "default_icon": "icons/pinkBlob.png",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "Save This Site!"
   },
+
+
 
   "permissions": [
     "activeTab",
