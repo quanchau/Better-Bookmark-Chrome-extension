@@ -31,16 +31,42 @@ $(document).ready(function(){
 		}
 		 $("#title").val("");
 	});
+	var dateTags = {};
 
 	$("#addAllLinks").click(function() {
+		var today = new Date();
+    	var dd = today.getDate();
+    	var mm = today.getMonth()+1;
+    	var yyyy = today.getFullYear();
+    	var tempID = "" + mm + dd + yyyy;
+		$("#topic").slideUp();
 		$("#success").text("All links added!"); 
-		/**chrome.tabs.query({}, function(tabs) {
+		chrome.tabs.query({}, function(tabs) {
     		var urls = tabs.map(function() {
-		        return tab.url;
-   			 });
-    		All URL
-		});*/
+		    	 return tab.url;
+   			});
+   			dateTags[parseInt(tempID)] = urls;
+
+   		 });
+
+    	
+    	$("#bookmarks").append('<div id="dates" class="' + tempID + '"> <b>' + mm + '/' + dd + '/' + yyyy+ '</b> </div>');
+  
     });
+
+    $("#dates").click(function() {
+    	var cl = "" + $(this).attr("class");
+    	var urls = dateTags[parseInt(cl)];
+    	for (var i = 0; i < urls.length; i++) {
+    		window.location.href = ""+urls[i];
+    	}
+
+    });
+
+
+ /**   $("#dates").click(function() {
+
+    }); */
 
 
 	
