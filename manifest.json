@@ -5,11 +5,11 @@
 
 
   "browser_action":{
-    "default_icon": "icon.png",
+    "default_icon": "icons/pinkBlob.png",
     "default_popup": "popup.html"
   },
 
-  "permission": [
+  "permissions": [
     "activeTab",
     "storage"
   ]
