@@ -1,5 +1,6 @@
 var slidedown = true;
 var bookmarksSlide = true;
+var dateTags = {};
 $(document).ready(function(){
 
 	$("#bookmarks").hide();
@@ -22,27 +23,18 @@ $(document).ready(function(){
 				$("#success").text(""); 
 			}
 			else {
-				var urla = "about:blank";
-				chrome.tabs.query({
-  					active: true,
-  					currentWindow: true
-					}, function(tabs) {
-  						var tab = tabs[0];
-  						var url = tab.url;
-  						urla = "" + url;
-					});
+			//	var urla = "about:blank";
+				 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+			
+    				$("#bookmarks").append('<a id="' + title + '" href= "' + tabs[0].url + '" target= "_blank" > <b>' + title+ '</b> </a> <br>');
+ 				 });
 
-	/**	if ($((o"#" + title).val > 0) { 
-			$("#" + title).append("<p>  </p>");
-		} else { */
-			$("#bookmarks").append('<a id="' + title + '" href= "' + urla + '" target= "_blank" > <b>' + title+ '</b> </a> <br>');
-		//}
 		$("#failmessage").text("");
 		$("#success").text("Link added!"); 
 	}
 	$("#title").val("");
 });
-	var dateTags = {};
+
 
 	$("#addAllLinks").click(function() {
 		var today = new Date();
@@ -54,14 +46,15 @@ $(document).ready(function(){
     	var tempID = "" + mm + dd + yyyy + hour; // need to make ID more specific with time
     	$("#topic").slideUp();
     	$("#success").text("All links added!"); 
-    	chrome.tabs.query({}, function(tabs) {
-    		var urls = tabs.map(function() {
-    			return tab.url;
-    		});
-    		dateTags[parseInt(tempID)] = urls;
+    	var urls = {};
+  	    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+			for (var i = 0; i < tabs.length; i++) {
+				urls[i]= tabs[i].url;
+			}
+    		
+ 		});
 
-    	});
-
+ 		dateTags[parseInt(tempID)] = urls;
     	
     	$("#bookmarks").append('<div id="dates" class="' + tempID + '"> <b>' + mm + '/' + dd + '/' + yyyy + ' ' + hour+''+ am_pm +'</b> </div>');
 
@@ -77,28 +70,18 @@ $(document).ready(function(){
 		}
 	})
 
-  /**  $("#dates").click(function() {
-    	var cl = "" + $(this).attr("class");
+    $("#dates").click(function() {
+    	var cl = $(this).attr("class");
     	var urls = dateTags[parseInt(cl)];
     	for (var i = 0; i < urls.length; i++) {
-    		window.location.href = ""+urls[i];
+    		window.location.href = urls[i];
     	}
 
-    });/
-
-
- /**   $("#dates").click(function() {
-
- }); */
-
-
-
-
-
-
-
+    });
 
 });
+
+
 
 function hours(date)
 {
