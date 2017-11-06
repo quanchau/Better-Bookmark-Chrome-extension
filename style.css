@@ -1,11 +1,20 @@
+div.scroll {
+	height: 380px;
+    overflow: scroll;
+    overflow-x:hidden;
+}
 
 
 body {
+	display:block;
 	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 	/**background-color: #F08080; */
 	background-image: url("icons/pinkBackground.png");
 	width: 200px;
+
     overflow: hidden;
+    margin-left:10px;
+    margin-right:10px;
 
 }
 
