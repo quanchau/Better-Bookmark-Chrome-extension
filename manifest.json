@@ -1,16 +1,24 @@
 {
   "manifest_version" : 2,
-  "name": "Bookmark",
+  "name": "Better Bookmark",
   "version": "0.1",
 
 
   "browser_action":{
     "default_icon": "icons/pinkBlob.png",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "Save This Site!"
+  },
+
+  "background": {
+    "persistent": false,
+    "scripts": ["js/background.js"]
   },
 
   "permissions": [
-    "activeTab",
-    "storage"
-  ]
+    "tabs"
+  ],
+
+   "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
+
 }
