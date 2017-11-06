@@ -2,10 +2,23 @@ var slidedown = true;
 var bookmarksSlide = true;
 var dateTags = {};
 $(document).ready(function(){
+	chrome.storage.sync.get("bmrks", function(obj) {
+		console.log(obj);
+		$("#bookmarks").append(obj.bmrks);
+	});
+
+	chrome.storage.sync.get(dateTags, function(result) {
+		dateTags = result;
+	});
+
+
+//	chrome.storage.sync.clear();
 
 	$("#bookmarks").hide();
 	$("#topic").hide();
 	$("#addCurrentLink").click(function(){
+		$("#bookmarks").slideUp();
+		bookmarksSlide = true;
 		if (slidedown) {
 			$("#topic").slideDown();
 			slidedown = false;
@@ -24,16 +37,18 @@ $(document).ready(function(){
 			}
 			else {
 			//	var urla = "about:blank";
-				 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-			
-    				$("#bookmarks").append('<a id="' + title + '" href= "' + tabs[0].url + '" target= "_blank" > <b>' + title+ '</b> </a> <br>');
- 				 });
+			chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 
-		$("#failmessage").text("");
-		$("#success").text("Link added!"); 
-	}
-	$("#title").val("");
-});
+				$("#bookmarks").append('<a id="' + title + '" href= "' + tabs[0].url + '" target= "_blank" > <b>' + title+ '</b> </a> <br>');
+				saveChanges();
+			});
+
+			$("#failmessage").text("");
+			$("#success").text("Link added!");; 
+		}
+		$("#title").val("");
+		saveChanges();
+	});
 
 
 	$("#addAllLinks").click(function() {
@@ -42,21 +57,27 @@ $(document).ready(function(){
 		var mm = today.getMonth()+1;
 		var yyyy = today.getFullYear();
 		var hour = hours(today);
+		var min = today.getMinutes();
 		var am_pm = ampm(today);
-    	var tempID = "" + mm + dd + yyyy + hour; // need to make ID more specific with time
+    	var tempID = "" + mm + dd + yyyy + hour + min; // need to make ID more specific with time
     	$("#topic").slideUp();
     	$("#success").text("All links added!"); 
-    	var urls = {};
-  	    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-			for (var i = 0; i < tabs.length; i++) {
-				urls[i]= tabs[i].url;
-			}
-    		
- 		});
+    	chrome.windows.getCurrent({"populate":true}, function(currentWindow) {
+    		var urls = "";
+    		var tabs = currentWindow.tabs;
+    		for (var i = 0; i < tabs.length; i++) {
+    			urls = urls +  tabs[i].url;
+    			urls = urls +  " ";
+    		}
 
- 		dateTags[parseInt(tempID)] = urls;
-    	
-    	$("#bookmarks").append('<div id="dates" class="' + tempID + '"> <b>' + mm + '/' + dd + '/' + yyyy + ' ' + hour+''+ am_pm +'</b> </div>');
+    		$("#bookmarks").append('<div class="dates" id="' + tempID + '"> <b>' + mm + '/' + dd + '/' + yyyy + ' ' + hour+':'+min+ am_pm +'</b> </div>');	
+    		dateTags[tempID] = urls;
+    	//	$("#bookmarks").append('<div>' + dateTags[tempID] + '</div>');
+
+    		saveChanges();
+    	});
+
+    	saveChanges();
 
     });
 
@@ -68,16 +89,32 @@ $(document).ready(function(){
 			$("#bookmarks").slideUp();
 			bookmarksSlide = true;
 		}
-	})
 
-    $("#dates").click(function() {
-    	var cl = $(this).attr("class");
-    	var urls = dateTags[parseInt(cl)];
-    	for (var i = 0; i < urls.length; i++) {
-    		window.location.href = urls[i];
-    	}
+	});
+
+	$('body').on('click', 'div.dates', function() {
+		var cl = $(this).attr('id');
+		chrome.storage.sync.get("dateTags", function(result) {
+			var urls = result.dateTags[cl];
+			$("#bookmarks").append('<div>' + urls + '</div>');
+			var res = urls.split(" ");
+			for (var i = 0; i < res.length; i++) {
+    			if (res[i].charAt(0) === 'h') { // check valid link
+    				chrome.tabs.create({
+    					url: res[i]
+    				});
+    			}
+
+    		
+    		}
 
     });
+
+
+
+	});
+
+
 
 });
 
@@ -101,6 +138,23 @@ function ampm(date)
     	return ' AM';
     return ' PM';
 }
+
+function saveChanges() {
+	
+	chrome.storage.sync.set({"dateTags": dateTags}, function() {
+          // Notify that we saved.
+          message('Settings saved');
+          $("#bookmarks").append('<div> saved saved! </div>');
+     });
+
+	var bm = $("#bookmarks").html();
+	chrome.storage.sync.set({"bmrks": bm}, function() {
+          // Notify that we saved.
+          message('Settings saved');
+     });
+}
+
+
 
 
 
