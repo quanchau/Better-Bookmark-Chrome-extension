@@ -4,6 +4,10 @@ div.scroll {
     overflow-x:hidden;
 }
 
+.delete {
+	text-align: right;
+	opacity: 0.5;
+}
 
 body {
 	display:block;
