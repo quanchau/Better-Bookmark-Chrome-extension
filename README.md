@@ -8,7 +8,7 @@ The extension is simply made up of HTML, CSS, Javascript and JQuery with the use
 
 The outstanding feature is that you can not only add one link as a bookmark (like what you normally do with Chrome bookmark), but you can add all the open links on your current Chrome window with the (date|time) given or with the title of your own choice! You can also delete your bookmarks or overwrite your bookmarks at any time.
 
-
+<img src="demo.jpg">
 
 
 Additional notes:
